@@ -16,8 +16,10 @@ document.getElementById("getDownload").onclick = function()
 	var decHash=atob(hsh);
 	var dodostr="";
 	var i;
+	var encryptShift = Math.floor(pasHash / 100);
 	for (i = 0; i < decHash.length; i++) {
-		var bit = mod((decHash.charCodeAt(i) - pasHash), 33);
+		var extraShift = i % 2 == 0 ? encryptShift : -encryptShift;
+		var bit = mod((decHash.charCodeAt(i) - pasHash - extraShift), 33);
 		var bitInt = parseInt(bit);
 		console.log(`${decHash.charCodeAt(i)}: ${bitInt}`);
 		dodostr += `${DodoChars[bitInt]}`;
