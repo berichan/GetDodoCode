@@ -1,12 +1,10 @@
 const DodoChars = 'ABCDEFGHJKLMNPQRSTUVWXY0123456789';
 
-Number.prototype.mod = function(n) {
-    return ((this%n)+n)%n;
-};
-
-document.getElementById("getDownload").onclick = function()
-{
+document.getElementById("getDownload").onclick = function() {
 	var hsh=document.getElementById("hash").value;
+	var pulhsh=getHash(hsh);
+	if (pulhsh != "")
+		hsh=pulhsh;
 	var pas=document.getElementById("pass").value;
 	var pasHash = TryParseInt(pas,null);
 	if (pasHash==null)
@@ -41,4 +39,15 @@ function TryParseInt(str,defaultValue) {
 
 function mod(n, m) {
   return ((n % m) + m) % m;
+}
+
+const lkup = 'Your dodo hash is ';
+function getHash(msg) {
+	var index = msg.indexOf(lkup);
+	if (index === -1)
+		return "";
+	var startHash = index + lkup.length;
+	var sHashStr = msg.substring(startHash);
+	var spl = sHashStr.split(" ");
+	return spl[0];
 }
