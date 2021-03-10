@@ -1,7 +1,16 @@
 const DodoChars = 'ABCDEFGHJKLMNPQRSTUVWXY0123456789';
 
+var hsh = getParameterByName('hash');
+if (hsh != null)
+{
+	hsh = hsh.replace('_', '/').replace('-', '+');
+	document.getElementById("hash").outerHTML = "";
+	document.getElementById("hshlbl").outerHTML = "";
+}
+
 document.getElementById("getDownload").onclick = function() {
-	var hsh=document.getElementById("hash").value;
+	if (hsh===null)
+		hsh=document.getElementById("hash").value;
 	var pulhsh=getHash(hsh);
 	if (pulhsh != "")
 		hsh=pulhsh;
@@ -50,4 +59,14 @@ function getHash(msg) {
 	var sHashStr = msg.substring(startHash);
 	var spl = sHashStr.split(" ");
 	return spl[0];
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
